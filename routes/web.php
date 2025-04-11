@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\CartController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -15,4 +15,10 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
+});
+Route::middleware('auth')->group(function () {
+    Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
+    Route::post('/cart/update', [CartController::class, 'updateQty'])->name('cart.updateQty');
+    Route::post('/cart/delete', [CartController::class, 'delete'])->name('cart.delete');
+    Route::post('/cart/delete-all', [CartController::class, 'deleteAll'])->name('cart.deleteAll');
 });
