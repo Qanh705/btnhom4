@@ -16,3 +16,20 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/', 'App\Http\Controllers\HomeController@index');
+Route::get('/about', 'App\Http\Controllers\HomeController@about');
+use App\Http\Controllers\MenuController;
+
+Route::get('/menu', [MenuController::class, 'index']);
+Route::post('/menu/buy-now', [MenuController::class, 'buyNow']);
+Route::get('/goi-y', 'App\Http\Controllers\ProductController@goiY');
+use App\Http\Controllers\ProductController;
+
+use App\Http\Controllers\CategoryController;
+
+Route::get('/category/{category}', [CategoryController::class, 'show']);
+
+
+
+
