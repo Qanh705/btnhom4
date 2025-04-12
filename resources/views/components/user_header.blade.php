@@ -1,13 +1,16 @@
-@if(isset($message) && is_array($message))  <!-- Kiểm tra xem $message có phải là mảng -->
-    @foreach($message as $msg)
-        <div class="message">
-            <span>{{ $msg }}</span>
-            <i class="fas fa-times" onclick="this.parentElement.remove();"></i>
-        </div>
-    @endforeach
-@elseif(isset($message))  <!-- Nếu $message không phải mảng thì hiển thị thông báo khác -->
-    <p>{{ $message }}</p> <!-- Hiển thị thông báo trực tiếp nếu không phải mảng -->
-@endif
+@php
+   use Illuminate\Support\Facades\DB;
+
+   $user_id = session('user_id'); // Lấy user_id từ session
+
+   $total_cart_items = 0;
+   $user = null;
+
+   if ($user_id) {
+      $total_cart_items = DB::table('cart')->where('user_id', $user_id)->count();
+      $user = DB::table('users')->where('id', $user_id)->first();
+   }
+@endphp
 
 <header class="header">
    <section class="flex">
@@ -21,14 +24,6 @@
       </nav>
 
       <div class="icons">
-         @php
-            use Illuminate\Support\Facades\DB;
-            $total_cart_items = 0;
-            if (isset($user_id) && $user_id) {
-               $total_cart_items = DB::table('cart')->where('user_id', $user_id)->count();
-            }
-         @endphp
-
          <a href="{{ url('search') }}"><i class="fas fa-search"></i></a>
          <a href="{{ url('cart') }}">
             <i class="fas fa-shopping-cart"></i>
@@ -39,18 +34,11 @@
       </div>
 
       <div class="profile">
-         @php
-            $user = null;
-            if (isset($user_id) && $user_id) {
-               $user = DB::table('users')->where('id', $user_id)->first();
-            }
-         @endphp
-
          @if($user)
             <p class="name">{{ $user->name }}</p>
             <div class="flex">
                <a href="{{ url('profile') }}" class="btn">Thông tin</a>
-               <a href="{{ url('components/user_logout') }}" onclick="return confirm('Bạn có chắc chắn muốn đăng xuất?');" class="delete-btn">Đăng xuất</a>
+               <a href="{{ url('logout') }}" onclick="return confirm('Bạn có chắc chắn muốn đăng xuất?');" class="delete-btn">Đăng xuất</a>
             </div>
             <p class="account">
                <a href="{{ url('register') }}">Đăng ký mới</a>
