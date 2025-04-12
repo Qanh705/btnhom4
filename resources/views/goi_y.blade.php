@@ -31,9 +31,8 @@
                   <input type="hidden" name="price" value="{{ $product->price }}">
                   <input type="hidden" name="image" value="{{ $product->image }}">
                   <button type="submit" class="fas fa-shopping-cart" name="add_to_cart"></button>
-                  <a href="#" class="image">
-                  <a href="{{ url('quick_view/' . $product->id) }}">
-   <img src="{{ $product->image }}" alt="{{ $product->name }}">
+                  <a href="{{ url('quick_view/' . $product->id) }}" class="image">
+    <img src="{{ url($product->image) }}" alt="{{ $product->name }}">
 </a>
 
 

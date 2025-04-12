@@ -13,7 +13,7 @@ class MenuController extends Controller
         $user_id = Session::get('user_id') ?? '';
         $products = DB::table('products')->get();
 
-        return view('menu.index', compact('products', 'user_id'));
+        return view('menu', compact('products', 'user_id'));
     }
 
     public function buyNow(Request $request)

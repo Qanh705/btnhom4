@@ -89,7 +89,9 @@
 
          <button type="submit" class="fas fa-shopping-cart" name="add_to_cart"></button>
 
-         <a href="{{ url('quick_view?pid=' . $product->id) }}" class="image">
+         
+         <a href="{{ url('quick_view/' . $product->id) }}" class="image">
+
          <img src="{{ url($product->image) }}" alt="{{ $product->name }}">
          </a>
 
@@ -104,11 +106,11 @@
    <p class="empty">Không có sản phẩm nào được thêm</p>
 @endif
 
-
    </div>
 
    <div class="more-btn">
-      <a href="SANPHAMGOIY.php" class="btn">Xem thêm</a>
+   <a href="{{ url('goiY') }}" class="btn">Xem Thêm</a>
+
    </div>
 </section>
 

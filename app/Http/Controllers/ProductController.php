@@ -11,9 +11,15 @@ class ProductController extends Controller
     {
         $products = DB::table('products')->inRandomOrder()->get();
         return view('goi_y', compact('products'));
-    }
-    
-    
+    }    
+    public function chitiet($id)
+    {
+        $product = DB::table('products')->where('id', $id)->first();
 
-    
+        if (!$product) {
+            abort(404); // sản phẩm không tồn tại
+        }
+
+        return view('quick_view', compact('product'));
+    }
 }
