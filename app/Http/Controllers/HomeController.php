@@ -18,4 +18,39 @@ class HomeController extends Controller
     {
         return view('about');
     }
+    public function contact(Request $request)
+{
+    // Kiểm tra session và lấy user_id nếu có, nếu không thì gán là NULL
+    $user_id = session('user_id') ?? null;
+
+    if ($request->isMethod('post')) {
+        $data = $request->only(['name', 'email', 'number', 'msg']);
+
+        // Kiểm tra tin nhắn đã tồn tại hay chưa
+        $tontai = DB::table('messages')
+                    ->where('name', $data['name'])
+                    ->where('email', $data['email'])
+                    ->where('number', $data['number'])
+                    ->where('message', $data['msg'])
+                    ->exists(); 
+
+        if ($tontai) {
+            return view('contact', ['message' => 'Tin nhắn đã có rồi']);
+        }
+
+        // Lưu tin nhắn vào cơ sở dữ liệu, đảm bảo user_id không phải NULL nếu có ràng buộc
+        DB::table('messages')->insert([
+            'user_id' => $user_id,  // Gán giá trị user_id là NULL nếu không có session
+            'name' => $data['name'],
+            'email' => $data['email'],
+            'number' => $data['number'],
+            'message' => $data['msg'],
+        ]);
+
+        return view('contact', ['message' => 'Đã gửi tin nhắn thành công']);
+    }
+
+    return view('contact');
+}
+
 }

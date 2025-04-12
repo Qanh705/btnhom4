@@ -19,3 +19,5 @@ Route::get('/', function () {
 
 Route::get('/', 'App\Http\Controllers\HomeController@index');
 Route::get('/about', 'App\Http\Controllers\HomeController@about');
+Route::get('/contact', 'App\Http\Controllers\HomeController@contact');
+Route::post('/contact', 'App\Http\Controllers\HomeController@contact');

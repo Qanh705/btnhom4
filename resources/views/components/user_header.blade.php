@@ -1,10 +1,12 @@
-@if(isset($message))
-   @foreach($message as $msg)
-      <div class="message">
-         <span>{{ $msg }}</span>
-         <i class="fas fa-times" onclick="this.parentElement.remove();"></i>
-      </div>
-   @endforeach
+@if(isset($message) && is_array($message))  <!-- Kiểm tra xem $message có phải là mảng -->
+    @foreach($message as $msg)
+        <div class="message">
+            <span>{{ $msg }}</span>
+            <i class="fas fa-times" onclick="this.parentElement.remove();"></i>
+        </div>
+    @endforeach
+@elseif(isset($message))  <!-- Nếu $message không phải mảng thì hiển thị thông báo khác -->
+    <p>{{ $message }}</p> <!-- Hiển thị thông báo trực tiếp nếu không phải mảng -->
 @endif
 
 <header class="header">
