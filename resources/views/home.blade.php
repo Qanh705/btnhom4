@@ -82,13 +82,13 @@
 
    @if(count($products) > 0)
    @foreach ($products as $product)
-      <form action="" method="post" class="box">
+      <form action="{{ url('/cart') }}" method="post" class="box">
          @csrf
          <input type="hidden" name="pid" value="{{ $product->id }}">
          <input type="hidden" name="name" value="{{ $product->name }}">
          <input type="hidden" name="price" value="{{ $product->price }}">
          <input type="hidden" name="image" value="{{ $product->image }}">
-
+         <input type="number" name="qty" class="qty" min="1" max="99" value="1" maxlength="2">
          <button type="submit" class="fas fa-shopping-cart" name="add_to_cart"></button>
 
          <a href="{{ url('quick_view?pid=' . $product->id) }}" class="image">
