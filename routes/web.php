@@ -49,3 +49,11 @@ Route::get('/orders/detail', 'App\Http\Controllers\OrdersController@detail');
 
 Route::get('/qrcode', 'App\Http\Controllers\QrcodeController@showQRCode');
 Route::post('/qrcode/confirmPayment', 'App\Http\Controllers\QrcodeController@confirmPayment');
+
+Route::get('/menu', 'App\Http\Controllers\MenuController@index');
+Route::post('/menu/buy-now', 'App\Http\Controllers\MenuController@buyNow');
+Route::get('/goiY', 'App\Http\Controllers\ProductController@goiY');
+
+Route::get('/category/{category}', 'App\Http\Controllers\CategoryController@show');
+
+Route::get('/quick_view/{id}', 'App\Http\Controllers\ProductController@chitiet');

@@ -47,28 +47,27 @@
    <h1 class="title">Danh mục điện thoại</h1>
    <div class="box-container">
 
-      <a href="category.php?category=iphone" class="box">
-         <img src="hinhanh/iphone.png" alt="">
+      <a href="{{ url('category/iphone') }}" class="box">
+         <img src="{{ asset('hinhanh/iphone.png') }}" alt="Iphone">
          <h3>Iphone</h3>
       </a>
 
-      <a href="category.php?category=samsung" class="box">
-         <img src="hinhanh/samsung.png" alt="">
+      <a href="{{ url('category/samsung') }}" class="box">
+         <img src="{{ asset('hinhanh/samsung.png') }}" alt="Samsung">
          <h3>Samsung</h3>
       </a>
 
-      <a href="category.php?category=oppo" class="box">
-         <img src="hinhanh/oppo.png" alt="">
+      <a href="{{ url('category/oppo') }}" class="box">
+         <img src="{{ asset('hinhanh/oppo.png') }}" alt="Oppo">
          <h3>Oppo</h3>
       </a>
 
-      <a href="category.php?category=sony" class="box">
-         <img src="hinhanh/sony.png" alt="">
+      <a href="{{ url('category/sony') }}" class="box">
+         <img src="{{ asset('hinhanh/sony.png') }}" alt="Sony">
          <h3>Sony</h3>
       </a>
 
    </div>
-
 </section>
 
 
@@ -88,10 +87,10 @@
          <input type="hidden" name="name" value="{{ $product->name }}">
          <input type="hidden" name="price" value="{{ $product->price }}">
          <input type="hidden" name="image" value="{{ $product->image }}">
-         <input type="number" name="qty" class="qty" min="1" max="99" value="1" maxlength="2">
+
          <button type="submit" class="fas fa-shopping-cart" name="add_to_cart"></button>
 
-         <a href="{{ url('quick_view?pid=' . $product->id) }}" class="image">
+         <a href="{{ url('quick_view/' . $product->id) }}" class="image">
          <img src="{{ url($product->image) }}" alt="{{ $product->name }}">
          </a>
 
@@ -100,6 +99,7 @@
             <div class="price">{{ number_format($product->price, 0, ',', '.') }}<span>.VNĐ</span></div>
             <input type="number" name="qty" class="qty" min="1" max="99" value="1" maxlength="2">
          </div>
+         <button type="submit" name="buy_now" class="buy-now-btn">Mua ngay</button>
       </form>
    @endforeach
 @else
@@ -110,7 +110,7 @@
    </div>
 
    <div class="more-btn">
-      <a href="SANPHAMGOIY.php" class="btn">Xem thêm</a>
+   <a href="{{ url('goiY') }}" class="btn">Xem Thêm</a>
    </div>
 </section>
 
