@@ -27,3 +27,5 @@ Route::get('/category/{category}', 'App\Http\Controllers\CategoryController@show
 Route::get('/quick_view/{id}', 'App\Http\Controllers\ProductController@chitiet');
 
 
+
+

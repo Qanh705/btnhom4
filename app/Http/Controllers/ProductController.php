@@ -22,4 +22,5 @@ class ProductController extends Controller
 
         return view('quick_view', compact('product'));
     }
+ 
 }

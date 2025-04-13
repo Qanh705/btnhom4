@@ -88,10 +88,8 @@
          <input type="hidden" name="image" value="{{ $product->image }}">
 
          <button type="submit" class="fas fa-shopping-cart" name="add_to_cart"></button>
-
          
          <a href="{{ url('quick_view/' . $product->id) }}" class="image">
-
          <img src="{{ url($product->image) }}" alt="{{ $product->name }}">
          </a>
 
@@ -124,7 +122,6 @@
 
 
 
-
 <script>
 
 var swiper = new Swiper(".hero-slider", {
@@ -141,8 +138,6 @@ var swiper = new Swiper(".hero-slider", {
    },
 });
 </script>
-
-
 
 
 
