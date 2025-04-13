@@ -9,6 +9,10 @@ class Admin extends Model
 {
     use HasFactory;
 
+    protected $table = 'admins';
+    
+    public $timestamps = true;
+    
     protected $fillable = [
         'name',
         'password'
@@ -17,4 +21,7 @@ class Admin extends Model
     protected $hidden = [
         'password'
     ];
+    
+    // Tắt timestamps nếu cần
+    // public $timestamps = false;
 }

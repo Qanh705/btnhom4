@@ -6,6 +6,9 @@ use App\Http\Controllers\CartController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\AdminAuthController;
+use App\Http\Controllers\Admin\ProductController as AdminProductController;
+use App\Http\Controllers\Admin\OrderController as AdminOrderController;
 
 /*
 |--------------------------------------------------------------------------
@@ -43,12 +46,30 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/messages', [MessageController::class, 'store'])->name('messages.store');
 });
 
-// Admin routes
-// Bỏ tạm thời middleware 'auth' để có thể truy cập các trang admin mà không cần đăng nhập
-Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
-Route::get('/admin/users', [AdminController::class, 'manageUsers'])->name('admin.users');
-Route::get('/admin/statistics', [AdminController::class, 'statistics'])->name('admin.statistics');
-Route::get('/admin/messages', [AdminController::class, 'receiveMessages'])->name('admin.messages');
+// Admin Login Routes
+Route::get('/admin/login', [AdminAuthController::class, 'showLoginForm'])->name('admin.login');
+Route::post('/admin/login', [AdminAuthController::class, 'login']);
+Route::get('/admin/logout', [AdminAuthController::class, 'logout'])->name('admin.logout');
+
+// Admin Routes - Protected by middleware
+Route::middleware(['admin'])->prefix('admin')->group(function () {
+    // Admin Dashboard Routes
+    Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
+    Route::get('/users', [AdminController::class, 'manageUsers'])->name('admin.users');
+    Route::get('/statistics', [AdminController::class, 'statistics'])->name('admin.statistics');
+    Route::get('/messages', [AdminController::class, 'receiveMessages'])->name('admin.messages');
+
+    // Admin Product Routes
+    Route::get('/products', [AdminProductController::class, 'index'])->name('admin.products.index');
+    Route::post('/products', [AdminProductController::class, 'store'])->name('admin.products.store');
+    Route::post('/products/update', [AdminProductController::class, 'update'])->name('admin.products.update');
+    Route::get('/products/delete/{id}', [AdminProductController::class, 'destroy'])->name('admin.products.delete');
+
+    // Admin Order Routes
+    Route::get('/orders', [AdminOrderController::class, 'index'])->name('admin.orders.index');
+    Route::post('/orders/update-status', [AdminOrderController::class, 'updateStatus'])->name('admin.orders.update-status');
+    Route::get('/orders/delete/{id}', [AdminOrderController::class, 'delete'])->name('admin.orders.delete');
+});
 
 // Authentication routes
 Route::middleware(['guest'])->group(function () {
@@ -56,7 +77,14 @@ Route::middleware(['guest'])->group(function () {
         return view('auth.login');
     })->name('login');
     
+    Route::post('/login', [App\Http\Controllers\Auth\LoginController::class, 'login'])->name('login.post');
+    
     Route::get('/register', function () {
         return view('auth.register');
     })->name('register');
+    
+    Route::post('/register', [App\Http\Controllers\Auth\RegisterController::class, 'register'])->name('register.post');
 });
+
+// Logout route
+Route::post('/logout', [App\Http\Controllers\Auth\LoginController::class, 'logout'])->name('logout');

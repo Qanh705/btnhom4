@@ -1,0 +1,97 @@
+[33mcommit e0d0969002e29d4ca78786c3c606bce6fc6bce23[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mbao[m[33m)[m
+Author: baobest-BA <bao230304@gmail.com>
+Date:   Sun Apr 13 01:15:18 2025 +0700
+
+    giao diện dashboard chưa sửa
+
+[1mdiff --git a/app/Http/Controllers/AdminController.php b/app/Http/Controllers/AdminController.php[m
+[1mnew file mode 100644[m
+[1mindex 0000000..5d0d700[m
+[1m--- /dev/null[m
+[1m+++ b/app/Http/Controllers/AdminController.php[m
+[36m@@ -0,0 +1,56 @@[m
+[32m+[m[32m<?php[m
+[32m+[m
+[32m+[m[32mnamespace App\Http\Controllers;[m
+[32m+[m
+[32m+[m[32muse Illuminate\Http\Request;[m
+[32m+[m[32muse App\Models\User;[m
+[32m+[m[32muse App\Models\Product;[m
+[32m+[m[32muse App\Models\Order;[m
+[32m+[m[32muse App\Models\Message;[m
+[32m+[m[32muse DB;[m
+[32m+[m
+[32m+[m[32mclass AdminController extends Controller[m
+[32m+[m[32m{[m
+[32m+[m[32m    public function dashboard()[m
+[32m+[m[32m    {[m
+[32m+[m[32m        // Lấy thông tin tổng quan[m
+[32m+[m[32m        $userCount = User::count();[m
+[32m+[m[32m        $productCount = Product::count();[m
+[32m+[m[32m        $orderCount = Order::count();[m
+[32m+[m[32m        $messageCount = Message::count();[m
+[32m+[m[41m        [m
+[32m+[m[32m        // Doanh thu[m
+[32m+[m[32m        $totalRevenue = Order::sum('total_price');[m
+[32m+[m[41m        [m
+[32m+[m[32m        return view('admin.dashboard', compact('userCount', 'productCount', 'orderCount', 'messageCount', 'totalRevenue'));[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m    public function manageUsers()[m
+[32m+[m[32m    {[m
+[32m+[m[32m        // Lấy danh sách người dùng[m
+[32m+[m[32m        $users = User::all();[m
+[32m+[m[32m        return view('admin.users', compact('users'));[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m    public function statistics()[m
+[32m+[m[32m    {[m
+[32m+[m[32m        // Lấy thống kê theo tháng[m
+[32m+[m[32m        $monthlySales = Order::select(DB::raw('MONTH(created_at) as month'), DB::raw('SUM(total_price) as total_sales'))[m
+[32m+[m[32m            ->groupBy('month')[m
+[32m+[m[32m            ->get();[m
+[32m+[m[41m            [m
+[32m+[m[32m        // Lấy 5 sản phẩm mới nhất theo ID[m
+[32m+[m[32m        $topProducts = Product::orderBy('id', 'desc')[m
+[32m+[m[32m            ->take(5)[m
+[32m+[m[32m            ->get();[m
+[32m+[m[41m            [m
+[32m+[m[32m        return view('admin.statistics', compact('monthlySales', 'topProducts'));[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m    public function receiveMessages()[m
+[32m+[m[32m    {[m
+[32m+[m[32m        // Lấy danh sách tin nhắn[m
+[32m+[m[32m        $messages = Message::with('user')->orderBy('id', 'desc')->get();[m
+[32m+[m[32m        return view('admin.messages', compact('messages'));[m
+[32m+[m[32m    }[m
+[32m+[m[32m}[m
+[1mdiff --git a/app/Http/Controllers/CartController.php b/app/Http/Controllers/CartController.php[m
+[1mnew file mode 100644[m
+[1mindex 0000000..0cd2790[m
+[1m--- /dev/null[m
+[1m+++ b/app/Http/Controllers/CartController.php[m
+[36m@@ -0,0 +1,57 @@[m
+[32m+[m[32m<?php[m
+[32m+[m
+[32m+[m[32mnamespace App\Http\Controllers;[m
+[32m+[m
+[32m+[m[32muse App\Models\Cart;[m
+[32m+[m[32muse App\Models\Product;[m
+[32m+[m[32muse Illuminate\Http\Request;[m
+[32m+[m[32muse Illuminate\Support\Facades\Auth;[m
+[32m+[m
+[32m+[m[32mclass CartController extends Controller[m
+[32m+[m[32m{[m
+[32m+[m[32m    public function index()[m
+[32m+[m[32m    {[m
+[32m+[m[32m        $carts = Cart::where('user_id', Auth::id())->get();[m
+[32m+[m[32m        return view('cart.index', compact('carts'));[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m    public function store(Request $request, $id)[m
+[32m+[m[32m    {[m
+[32m+[m[32m        $product = Product::findOrFail($id);[m
+[32m+[m[41m        [m
+[32m+[m[32m        $cart = Cart::where('user_id', Auth::id())[m
+[3

@@ -13,6 +13,10 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // \App\Models\User::factory(10)->create();
+        // Gọi AdminSeeder để tạo tài khoản admin
+        $this->call(AdminSeeder::class);
+        
+        // Tạo dữ liệu mẫu cho sản phẩm
+        $this->call(ProductSeeder::class);
     }
 }

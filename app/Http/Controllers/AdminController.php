@@ -8,11 +8,18 @@ use App\Models\Product;
 use App\Models\Order;
 use App\Models\Message;
 use DB;
+use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\Session;
 
 class AdminController extends Controller
 {
     public function dashboard()
     {
+        // Kiểm tra đăng nhập
+        if (!Session::has('admin_id')) {
+            return redirect('admin/login');
+        }
+        
         // Lấy thông tin tổng quan
         $userCount = User::count();
         $productCount = Product::count();
