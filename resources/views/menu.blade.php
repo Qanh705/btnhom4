@@ -37,7 +37,7 @@
                <div class="name">{{ $product->name }}</div>
                <div class="flex">
                   <div class="price">{{ number_format($product->price, 0, ',', '.') }}<span>.VNĐ</span></div>
-                  <input type="number" name="qty" class="qty" min="1" max="99" value="1">
+                  <input type="number" name="qty" class="qty" min="1" max="99" value="1" maxlength="2">
                </div>
             </form>
          @endforeach

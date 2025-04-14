@@ -3,7 +3,7 @@
 <h1 class="title">Chi tiết sản phẩm</h1>
 
 <section class="quick-view">
-   <form action="" method="post" class="product-box">
+   <form action="{{ url('/cart') }}" method="post" class="product-box">
       @csrf
       <input type="hidden" name="pid" value="{{ $product->id }}">
       <input type="hidden" name="name" value="{{ $product->name }}">
@@ -15,12 +15,15 @@
 
          <div class="product-info">
             <h2 class="product-name">{{ $product->name }}</h2>
-            <div class="product-price">{{ number_format($product->price, 0, ',', '.') }} <span>VNĐ</span></div>
+            <div class="product-price">
+               {{ number_format($product->price, 0, ',', '.') }}
+               <span>VNĐ</span>
+            </div>
 
             <div class="quantity-cart">
                <label for="qty">Số lượng:</label>
                <input type="number" name="qty" class="qty" min="1" max="99" value="1">
-               <button type="submit" class="btn-cart">Thêm Vào Giỏ Hàng</button>
+               <button type="submit" name="add_to_cart" class="btn-cart">Thêm Vào Giỏ Hàng</button>
             </div>
 
             <div class="product-description">
