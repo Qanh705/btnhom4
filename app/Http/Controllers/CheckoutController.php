@@ -49,6 +49,7 @@ class CheckoutController extends Controller
                         'address'        => $profile->address,
                         'total_products' => $total_products,
                         'total_price'    => $grand_total,
+                        'payment_status' => 'Đang xử lí',
                     ]);
 
                     DB::table('cart')->where('user_id', $user_id)->delete();

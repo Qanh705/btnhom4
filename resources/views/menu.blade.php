@@ -39,7 +39,6 @@
                   <div class="price">{{ number_format($product->price, 0, ',', '.') }}<span>.VNĐ</span></div>
                   <input type="number" name="qty" class="qty" min="1" max="99" value="1">
                </div>
-               <button type="submit" name="buy_now" class="buy-now-btn">Mua ngay</button>
             </form>
          @endforeach
       @else
