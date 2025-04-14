@@ -41,10 +41,8 @@ class QrcodeController extends Controller
         $total_products .= $item->name . ' (' . $item->quantity . ') ';
     }
 
-    // Lấy thông tin user
     $user = DB::table('users')->where('id', $user_id)->first();
 
-    // Insert đơn hàng
     $order_id = DB::table('orders')->insertGetId([
         'user_id'        => $user_id,
         'name'           => $user->name,
@@ -57,10 +55,8 @@ class QrcodeController extends Controller
         'payment_status' => 'Đang xử lí',
     ]);
 
-    // Xóa giỏ hàng
     DB::table('cart')->where('user_id', $user_id)->delete();
 
-    // Điều hướng đến chi tiết đơn hàng
     return redirect('/orders/detail?id=' . $order_id)->with('message', 'success');
 }
 

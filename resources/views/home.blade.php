@@ -129,9 +129,9 @@
 var swiper = new Swiper(".hero-slider", {
    loop: true,
    grabCursor: true,
-   effect: "slide", // Sử dụng hiệu ứng vuốt
-   autoplay: { // Thêm tính năng tự động vuốt
-      delay: 3000, // Thời gian giữa các slide (3000ms = 3 giây)
+   effect: "slide", 
+   autoplay: {
+      delay: 3000, 
   
    },
    pagination: {

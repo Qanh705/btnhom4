@@ -93,12 +93,10 @@ class ProfileController extends Controller
     
         $data = [];
     
-        // Tên
         if ($request->filled('name')) {
             $data['name'] = $request->name;
         }
     
-        // Email
         if ($request->filled('email') && $request->email !== $user->email) {
             if (DB::table('users')->where('email', $request->email)->where('id', '!=', $user_id)->exists()) {
                 return back()->withErrors(['email' => 'Email đã được sử dụng']);
@@ -106,7 +104,6 @@ class ProfileController extends Controller
             $data['email'] = $request->email;
         }
     
-        // Số điện thoại
         if ($request->filled('number') && $request->number !== $user->number) {
             if (DB::table('users')->where('number', $request->number)->where('id', '!=', $user_id)->exists()) {
                 return back()->withErrors(['number' => 'Số điện thoại đã được sử dụng']);
@@ -114,7 +111,6 @@ class ProfileController extends Controller
             $data['number'] = $request->number;
         }
     
-        // Mật khẩu
         if (
             $request->filled('old_pass') ||
             $request->filled('new_pass') ||
@@ -135,7 +131,6 @@ class ProfileController extends Controller
             }
         }
     
-        // Cập nhật
         DB::table('users')->where('id', $user_id)->update($data);
     
         return back()->with('success', 'Cập nhật thông tin thành công!');

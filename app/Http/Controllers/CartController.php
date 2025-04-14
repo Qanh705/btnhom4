@@ -17,7 +17,7 @@ class CartController extends Controller
 
         $message = [];
 
-        // ✅ Thêm sản phẩm vào giỏ hàng
+        //Thêm sản phẩm vào giỏ hàng
         if ($request->isMethod('post') && $request->has('add_to_cart')) {
             $pid = $request->input('pid');
             $name = $request->input('name');
@@ -25,18 +25,17 @@ class CartController extends Controller
             $image = $request->input('image');
             $qty = $request->input('qty');
 
-            // Kiểm tra sản phẩm đã tồn tại chưa
             $existing = DB::table('cart')->where([
                 ['user_id', '=', $user_id],
                 ['pid', '=', $pid]
             ])->first();
 
             if ($existing) {
-                // Nếu đã có thì tăng số lượng
+                // tăng sản phẩm khi nó đã có trong giỏ 
                 $newQty = $existing->quantity + $qty;
                 DB::table('cart')->where('id', $existing->id)->update(['quantity' => $newQty]);
             } else {
-                // Nếu chưa có thì thêm mới
+
                 DB::table('cart')->insert([
                     'user_id' => $user_id,
                     'pid' => $pid,
@@ -50,20 +49,17 @@ class CartController extends Controller
             $message[] = 'Đã thêm vào giỏ hàng!';
         }
 
-        // ✅ Xử lý xóa từng sản phẩm
         if ($request->isMethod('post') && $request->has('delete')) {
             $cart_id = $request->input('cart_id');
             DB::table('cart')->where('id', $cart_id)->delete();
             $message[] = 'Xóa sản phẩm thành công.';
         }
 
-        // ✅ Xử lý xóa tất cả sản phẩm
         if ($request->isMethod('post') && $request->has('delete_all')) {
             DB::table('cart')->where('user_id', $user_id)->delete();
             $message[] = 'Xóa tất cả sản phẩm';
         }
 
-        // ✅ Xử lý cập nhật số lượng
         if ($request->isMethod('post') && $request->has('update_qty')) {
             $cart_id = $request->input('cart_id');
             $qty = htmlspecialchars($request->input('qty'), ENT_QUOTES, 'UTF-8');
@@ -71,7 +67,6 @@ class CartController extends Controller
             $message[] = 'Đã cập nhật số lượng thành công.';
         }
 
-        // ✅ Lấy dữ liệu giỏ hàng
         $cart_items = DB::table('cart')->where('user_id', $user_id)->get();
         $grand_total = 0;
 

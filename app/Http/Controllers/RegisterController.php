@@ -41,7 +41,7 @@ class RegisterController extends Controller
             'name' => $name,
             'email' => $email,
             'number' => $number,
-            'password' => $pass // Giống PHP gốc – nếu cần Hash thì dùng bcrypt()
+            'password' => $pass 
         ]);
 
         $user = DB::table('users')

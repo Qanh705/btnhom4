@@ -17,7 +17,7 @@ class ProductController extends Controller
         $product = DB::table('products')->where('id', $id)->first();
 
         if (!$product) {
-            abort(404); // sản phẩm không tồn tại
+            abort(404); //error: san pham khong ton tai
         }
 
         return view('quick_view', compact('product'));

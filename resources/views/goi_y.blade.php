@@ -36,7 +36,6 @@
 </a>
 
 
-                     <!-- <img src="{{ asset('hinhanh/' . $product->image) }}" alt="{{ $product->name }}"> -->
                   </a>
                   <div class="name">{{ $product->name }}</div>
                   <div class="flex">

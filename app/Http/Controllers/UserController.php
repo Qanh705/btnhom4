@@ -32,7 +32,7 @@ class UserController extends Controller
     }
     public function logout()
     {
-        Session::flush(); // Xóa toàn bộ session
-        return redirect('/'); // quay về trang chủ
+        Session::flush();
+        return redirect('/');
     }
 }

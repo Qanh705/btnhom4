@@ -31,7 +31,7 @@
                <button type="submit" class="fas fa-shopping-cart" name="add_to_cart"></button>
                <a href="{{ url('quick_view/' . $product->id) }}" class="image">
                   <img src="{{ $product->image }}" alt="{{ $product->name }}">
-                  <!-- <img src="{{ asset('hinhanh/' . $product->image) }}" alt="{{ $product->name }}"> -->
+                
 
                </a>
                <div class="name">{{ $product->name }}</div>

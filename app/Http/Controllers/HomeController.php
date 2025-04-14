@@ -10,10 +10,10 @@ class HomeController extends Controller
 {
     public function index(Request $request)
     {
-        // Lấy toàn bộ sản phẩm 
+        // lấy random 6 sản phẩm để hiện 
         $products = DB::table('products')->inRandomOrder()->limit(6)->get();
 
-        return view('home', ['products'=> $products]); //// Gửi dữ liệu $products vào view, với tên biến là 'products'
+        return view('home', ['products'=> $products]); //gửi dlieu product vào view và đặt tên 
     }
     public function about()
     {
@@ -21,13 +21,11 @@ class HomeController extends Controller
     }
     public function contact(Request $request)
     {
-        // Kiểm tra session và lấy user_id nếu có, nếu không thì gán là NULL
         $user_id = session('user_id') ?? null;
 
         if ($request->isMethod('post')) {
             $data = $request->only(['name', 'email', 'number', 'msg']);
 
-            // Kiểm tra tin nhắn đã tồn tại hay chưa
             $tontai = DB::table('messages')
                         ->where('name', $data['name'])
                         ->where('email', $data['email'])
@@ -39,7 +37,6 @@ class HomeController extends Controller
                 return view('contact', ['message' => 'Tin nhắn đã có rồi']);
             }
 
-            // Lưu tin nhắn vào cơ sở dữ liệu, đảm bảo user_id không phải NULL nếu có ràng buộc
             DB::table('messages')->insert([
                 'user_id' => $user_id,  // Gán giá trị user_id là NULL nếu không có session
                 'name' => $data['name'],

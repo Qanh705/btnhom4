@@ -15,16 +15,13 @@ class OrdersController extends Controller
 
         $user_id = session('user_id');
 
-        // Phân trang
         $ordersPerPage = 10;
         $currentPage = max(1, (int)$request->get('page', 1));
         $offset = ($currentPage - 1) * $ordersPerPage;
 
-        // Tổng số đơn hàng
         $totalOrders = DB::table('orders')->where('user_id', $user_id)->count();
         $totalPages = ceil($totalOrders / $ordersPerPage);
 
-        // Lấy danh sách đơn hàng
         $orders = DB::table('orders')
             ->where('user_id', $user_id)
             ->offset($offset)
